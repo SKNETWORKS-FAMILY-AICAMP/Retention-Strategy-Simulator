@@ -70,10 +70,9 @@ Tooling note:
 
 각 에이전트별 개발 환경 대응:
 - Codex: shared rules come from `AGENTS.md`; shared skills come from `.agents/skills/`; local `.codex/` config is personal and must not be committed.
-- Claude Code: shared rules come from `CLAUDE.md`; if local skill adapters under `.claude/skills` are needed, generate them locally via sync instead of committing them.
 - Gemini CLI: shared rules come from `GEMINI.md`; local `.gemini/` settings are personal and must not be committed.
 - OpenCode: shared project tool config lives in `opencode.json`; user-specific config stays in the user's global config directory and must not be committed.
-- Generated adapter directories like `.claude/`, `.factory/`, `.codex/`, `.gemini/`, and `.opencode/` are local-only and intentionally ignored.
+- Generated adapter directories like `.factory/`, `.codex/`, `.gemini/`, and `.opencode/` are local-only and intentionally ignored.
 
 Git branching note:
 - No Git Flow branch skill is installed for this repo.
