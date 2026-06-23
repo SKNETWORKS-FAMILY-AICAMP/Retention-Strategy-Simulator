@@ -5,7 +5,6 @@
 This document defines the shared working rules for repository-level coding agents in this monorepo.
 
 Target agents:
-- Claude Code via `CLAUDE.md`
 - Codex via `AGENTS.md`
 - Gemini CLI via `GEMINI.md`
 
@@ -80,7 +79,6 @@ Use the official docs below before checking paths.
 
 | Tool / Agent | Official docs to check first | View first in repo | Then view user config | Managed/system config if needed |
 |---|---|---|---|---|
-| Claude Code | `https://docs.anthropic.com/en/docs/claude-code/settings` and `https://docs.anthropic.com/en/docs/claude-code/mcp` | `.mcp.json` for project-shared MCP servers, `.claude/settings.json` for project settings | `~/.claude.json` for user/local MCP config, `~/.claude/settings.json` for user settings | macOS: `/Library/Application Support/ClaudeCode/managed-settings.json` and `managed-mcp.json`; Windows: policy/managed paths from the official settings docs |
 | Codex | `https://developers.openai.com/codex/config-basic` and `https://developers.openai.com/codex/mcp` | `.codex/config.toml` | `~/.codex/config.toml` | Unix official doc explicitly lists `/etc/codex/config.toml`; if Windows-specific admin config is needed, consult the current official Codex docs before inspecting |
 | Gemini CLI | `https://geminicli.com/docs/reference/configuration/` and `https://geminicli.com/docs/tools/mcp-server/` | `.gemini/settings.json` | `~/.gemini/settings.json` | macOS: `/Library/Application Support/GeminiCli/settings.json`; Windows: `C:\ProgramData\gemini-cli\settings.json`; defaults file paths are listed in the same official docs |
 | OpenCode | `https://opencode.ai/docs/config/` and `https://opencode.ai/docs/mcp-servers/` | `opencode.json` in project root, then `.opencode/` directories if relevant | `~/.config/opencode/opencode.json` and `~/.config/opencode/` directories | macOS: `/Library/Application Support/opencode/`; Windows: `%ProgramData%\opencode` |
@@ -151,7 +149,6 @@ Tooling note:
 ## 각 에이전트별 개발 환경 대응
 
 - Codex: shared repo rules come from `AGENTS.md`; shared project skills come from `.agents/skills/`; local `.codex/` config is personal and must not be committed.
-- Claude Code: shared repo rules come from `CLAUDE.md`; shared project skills source is `.agents/skills/`; local `.claude/skills/` adapters may be created by sync on each machine and must not be committed.
 - Gemini CLI: shared repo rules come from `GEMINI.md`; shared project skills source is `.agents/skills/`; local `.gemini/` config is personal and must not be committed.
 - OpenCode: shared repo tool config comes from `opencode.json`; shared project skills source is `.agents/skills/`; local `.opencode/` state is personal and must not be committed.
 - Common rule: generated or personal agent folders must not be mixed into the repository unless they are explicitly designated as shared project assets. In this repo, the shared project asset is `.agents/skills/`.
