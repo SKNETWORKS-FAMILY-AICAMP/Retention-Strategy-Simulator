@@ -57,7 +57,67 @@
 
 ---
 
-## 📊 Core Architecture (핵심 시뮬레이션 흐름)
+## 🏗️ System Architecture & Flow (시스템 아키텍처 및 흐름)
+
+본 프로젝트는 모노레포 내에서 프론트엔드 UI, Flask 백엔드 API, 그리고 오프라인 리서치 데이터 파이프라인이 유기적으로 연계되어 동작하는 **레이어드 아키텍처(Layered Architecture)**로 설계되었습니다.
+
+### 1. 📂 전체 시스템 아키텍처 (System Architecture)
+
+```mermaid
+flowchart TB
+    %% 외부 연결 및 브라우저 레이어
+    subgraph ClientLayer ["Client Layer (Frontend)"]
+        UI["React Web Application (Vite + React)"]
+        Dashboard["Interactive Dashboard (HTML/CSS/JS)"]
+        Charts["Metrics Visualization (Charts)"]
+        UI --> Dashboard
+        Dashboard --> Charts
+    end
+
+    %% API 게이트웨이 및 전송 레이어
+    subgraph APILayer ["API Layer (Communication)"]
+        API["RESTful API (JSON / HTTP)"]
+    end
+
+    %% 백엔드 서비스 레이어
+    subgraph BackendLayer ["Backend Layer (Flask Server)"]
+        Flask["Flask Web Framework"]
+        Engine["Simulation Engine (MDP Core)"]
+        StateMgr["State & Transition Manager"]
+        PolicyComp["Policy Comparison Module"]
+        
+        Flask --> Engine
+        Engine --> StateMgr
+        Engine --> PolicyComp
+    end
+
+    %% 데이터 및 리서치 레이어
+    subgraph DataLayer ["Data & Research Layer"]
+        Scenarios["Scenario Configs (JSON/YAML)"]
+        Models["ML Models (XGBoost / Scikit-Learn)"]
+        DataAnalysis["Pandas Data Analytics"]
+    end
+
+    %% 상호 작용 흐름 정의
+    ClientLayer <-->|HTTP Requests / REST API| API
+    API <--> Flask
+    StateMgr -->|Load State Configurations| Scenarios
+    StateMgr -->|Predict & Calibrate Churn| Models
+    Models -.->|Experimentation & Offline Training| DataAnalysis
+    
+    %% 스타일링
+    classDef client fill:#e1f5fe,stroke:#039be5,stroke-width:2px;
+    classDef api fill:#efebe9,stroke:#8d6e63,stroke-width:2px;
+    classDef backend fill:#e8f5e9,stroke:#4caf50,stroke-width:2px;
+    classDef data fill:#fff3e0,stroke:#ffb74d,stroke-width:2px;
+    
+    class UI,Dashboard,Charts client;
+    class API api;
+    class Flask,Engine,StateMgr,PolicyComp backend;
+    class Scenarios,Models,DataAnalysis data;
+```
+
+### 2. 🎮 핵심 시뮬레이션 구동 흐름 (Simulation Flow)
 
 시뮬레이션 엔진은 플레이어가 의사결정을 내릴 때마다 상태가 바뀌고 보상을 얻는 MDP(Markov Decision Process)의 논리적 흐름에 따라 구동됩니다.
 
